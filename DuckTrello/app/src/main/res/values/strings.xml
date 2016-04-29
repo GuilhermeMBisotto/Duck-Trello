@@ -1,4 +1,11 @@
 <resources>
+
+    <!-- Globals-->
+    <string name="gblConfirm">Confirmar</string>
+    <string name="gblCancel">Cancelar</string>
+    <string name="gblOk">OK!</string>
+    <string name="gblError">Erro!</string>
+
     <string name="app_name">DuckTrello</string>
     <string name="action_settings">Settings</string>
 </resources>
