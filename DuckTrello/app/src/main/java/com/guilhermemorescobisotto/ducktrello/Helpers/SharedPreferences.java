@@ -2,7 +2,9 @@ package com.guilhermemorescobisotto.ducktrello.Helpers;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.guilhermemorescobisotto.ducktrello.Core;
+import com.guilhermemorescobisotto.ducktrello.Models.User;
 
 /**
  * Created by guilhermemorescobisotto on 4/28/16.
@@ -29,6 +31,6 @@ public class SharedPreferences {
     public boolean isSetupDone(){ return this.sPref.getBoolean(this.setupRef, false); }
 
     // Last Username
-    public void setLastUser(String username){ this.sPref.edit().putString(this.lastUserRef, username).apply(); }
-    public String getLastUser(){ return this.sPref.getString(this.lastUserRef, ""); }
+    public void setLastUser(User user){ this.sPref.edit().putString(this.lastUserRef, new Gson().toJson(user)).apply(); }
+    public User getLastUser(){ return new Gson().fromJson(this.sPref.getString(this.lastUserRef, ""), User.class); }
 }

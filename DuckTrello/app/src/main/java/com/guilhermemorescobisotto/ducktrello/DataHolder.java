@@ -1,5 +1,7 @@
 package com.guilhermemorescobisotto.ducktrello;
 
+import com.guilhermemorescobisotto.ducktrello.Models.User;
+
 import java.util.List;
 
 /**
@@ -7,7 +9,7 @@ import java.util.List;
  */
 public class DataHolder {
 
-//    public User currentUser;
+    public User currentUser;
 
     private static DataHolder holder = new DataHolder();
     public static DataHolder getRef() { return holder; }

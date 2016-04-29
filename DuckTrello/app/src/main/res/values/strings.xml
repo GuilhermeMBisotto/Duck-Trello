@@ -8,4 +8,8 @@
 
     <string name="app_name">DuckTrello</string>
     <string name="action_settings">Settings</string>
+
+    //Login
+    <string name="javLogin_ErrorUser">Erro no login!\nPor favor, verifique seu usuário e senha.</string>
+
 </resources>
