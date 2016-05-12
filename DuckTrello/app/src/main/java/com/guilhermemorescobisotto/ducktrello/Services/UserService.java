@@ -40,7 +40,7 @@ public class UserService {
         });
     }
 
-    public static void logoff() {
+    public static void logout() {
         SharedPreferences.ref().DestroyShared();
         DataHolder.clearAll();
     }
