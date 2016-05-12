@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.guilhermemorescobisotto.ducktrello.APIService.APIService;
 import com.guilhermemorescobisotto.ducktrello.APIService.APIServiceHandler;
+import com.guilhermemorescobisotto.ducktrello.DataHolder;
 import com.guilhermemorescobisotto.ducktrello.EnumConstant.DuckConstants;
 import com.guilhermemorescobisotto.ducktrello.Helpers.SharedPreferences;
 import com.guilhermemorescobisotto.ducktrello.Models.User;
@@ -37,5 +38,10 @@ public class UserService {
                 callback.onError(errorCode, errorMessage, err);
             }
         });
+    }
+
+    public static void logoff() {
+        SharedPreferences.ref().DestroyShared();
+        DataHolder.clearAll();
     }
 }

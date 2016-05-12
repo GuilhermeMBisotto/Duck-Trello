@@ -20,7 +20,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@mipmap/ic_duck_logo"
+            android:src="@mipmap/duck_icon"
             android:layout_marginBottom="20dp"/>
 
         <LinearLayout
