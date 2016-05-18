@@ -19,27 +19,6 @@ import kotlin.Pair;
  */
 public class UserService {
 
-    public static void logIn(final String user, final String pass, final APIServiceHandler callback) {
-        final List<Pair<String, String>> params = new ArrayList<Pair<String, String>>() {{
-            add(new Pair<>("username", user));
-            add(new Pair<>("password", pass));
-        }};
-
-        APIService.POST(DuckConstants.API_LOGIN_URL, params, new APIServiceHandler() {
-            @Override
-            public void onSuccess(Object obj) {
-                User user = new Gson().fromJson((JsonElement) obj, User.class);
-                SharedPreferences.ref().setLastUser(user);
-                callback.onSuccess(user);
-            }
-
-            @Override
-            public void onError(int errorCode, String errorMessage, Object err) {
-                callback.onError(errorCode, errorMessage, err);
-            }
-        });
-    }
-
     public static void logout() {
         SharedPreferences.ref().DestroyShared();
         DataHolder.clearAll();

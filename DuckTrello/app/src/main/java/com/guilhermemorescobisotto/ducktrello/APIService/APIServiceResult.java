@@ -9,17 +9,17 @@ import com.google.gson.annotations.SerializedName;
  */
 public class APIServiceResult {
 
-    @SerializedName("isSuccess")
-    public boolean isSuccess;
+//    @SerializedName("Response")
+//    public boolean responseMsg;
+//
+//    @SerializedName("Body")
+//    public JsonElement data;
 
-    @SerializedName("data")
-    public JsonElement data;
+//    public String responseString;
 
-    public String responseString;
-
-    @SerializedName("errorCode")
-    public int errorCode;
-
-    @SerializedName("errorMessage")
-    public String errorMessage;
+//    @SerializedName("errorCode")
+//    public int errorCode;
+//
+//    @SerializedName("errorMessage")
+//    public String errorMessage;
 }

@@ -54,13 +54,13 @@ public class APIService {
 		return new Handler<String>() {
 			@Override
 			public void success(Request request, Response response, String content) {
-				APIServiceResult result = gson.fromJson(content, APIServiceResult.class);
+//				APIServiceResult result = gson.fromJson(content, APIServiceResult.class);
 
-				if (result.isSuccess) {
-					handler.onSuccess(result.data);
+				if (response.getHttpStatusCode() == 200 && response.getHttpResponseMessage().equalsIgnoreCase("OK")) {
+					handler.onSuccess(content);
 				}
 				else {
-					handler.onError(result.errorCode, result.errorMessage, null);
+					handler.onError(1, "", null);
 				}
 
 				handler.onFinish();

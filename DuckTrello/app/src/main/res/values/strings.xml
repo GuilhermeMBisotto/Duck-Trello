@@ -7,7 +7,14 @@
     <string name="gblError">Erro!</string>
 
     <string name="app_name">DuckTrello</string>
+    <string name="home_className">Home</string>
     <string name="action_settings">Settings</string>
+    <string name="action_about">Sobre</string>
+
+
+    <string name="login_api">Logar com conta do Trello</string>
+    <string name="login_google_plus">Logar com conta do Google Plus</string>
+
 
     //Login
     <string name="javLogin_ErrorUser">Erro no login!\nPor favor, verifique seu usuário e senha.</string>

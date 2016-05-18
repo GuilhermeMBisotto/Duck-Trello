@@ -18,6 +18,7 @@ public class SharedPreferences {
 
     private final String setupRef = "setupRef";
     private final String lastUserRef = "lastUserRef";
+    private final String tokenRef = "tokenRef";
 
     private static final SharedPreferences ref = new SharedPreferences();
 
@@ -33,4 +34,9 @@ public class SharedPreferences {
     // Last Username
     public void setLastUser(User user){ this.sPref.edit().putString(this.lastUserRef, new Gson().toJson(user)).apply(); }
     public User getLastUser(){ return new Gson().fromJson(this.sPref.getString(this.lastUserRef, ""), User.class); }
+
+    // User Token
+    public void setUserToken(String token) { this.sPref.edit().putString(this.tokenRef, token).apply(); }
+    public String getUserToken() { return this.sPref.getString(this.tokenRef, ""); }
+
 }

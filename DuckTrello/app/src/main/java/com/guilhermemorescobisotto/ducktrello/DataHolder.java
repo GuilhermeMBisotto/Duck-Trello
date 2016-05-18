@@ -13,6 +13,7 @@ public class DataHolder {
 
     private static DataHolder holder = new DataHolder();
     public static DataHolder getRef() { return holder; }
+    public static String userToken;
 
     private DataHolder(){}
 

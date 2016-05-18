@@ -5,6 +5,9 @@ package com.guilhermemorescobisotto.ducktrello.EnumConstant;
  */
 public class DuckConstants {
 
-    public static final String API_LOGIN_URL = "";
-    public static final String APP_KEY = "78a185ce8f45133e15b98078c3ef398c";
+    public static final String API_BASE = "https://trello.com";
+    public static final String API_VERSION = "/1";
+    public static final String API_AUTHORIZE = API_BASE + API_VERSION + "/authorize";
+    public static final String API_BOARD = API_BASE + API_VERSION + "/members/my/boards";
+    public static final String APP_KEY = "accb172d9b5fc66e43158a080fabd8c2";
 }

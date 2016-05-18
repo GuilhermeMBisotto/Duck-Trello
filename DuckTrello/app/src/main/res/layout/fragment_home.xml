@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".Activities.HomeActivityFragment"
+                tools:showIn="@layout/activity_home"
+                android:background="@color/white">
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:fillViewport="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_home"
+                android:textColor="@color/blackDuck"
+                android:hint="Boards Response"
+                android:textColorHint="@color/blackDuck"
+                android:nestedScrollingEnabled="true"
+                android:layout_weight="1.0"
+                android:padding="16dp"/>
+    </ScrollView>
+
+
+</RelativeLayout>
