@@ -70,7 +70,7 @@ public class MainActivityFragment extends Fragment {
         public void onClick(View v) {
 
             llWebContentWrapper.setVisibility(View.VISIBLE);
-            String url = DuckConstants.API_AUTHORIZE + "?key=" + DuckConstants.APP_KEY + "&name=Duck%20Trello&expiration=never&response_type=token&scope=read,write";
+            String url = DuckConstants.API_AUTHORIZE + "key=" + DuckConstants.APP_KEY + "&name=Duck%20Trello&expiration=never&response_type=token&scope=read,write";
             WebViewCustom.initWebView(MainActivityFragment.this.getContext(), MainActivityFragment.this.webView, MainActivityFragment.this.llWebContentWrapper);
             MainActivityFragment.this.webView.loadUrl("about:blank");
 

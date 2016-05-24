@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.guilhermemorescobisotto.ducktrello.APIService.APIServiceHandler;
@@ -24,6 +25,8 @@ public class HomeActivityFragment extends Fragment {
 
 
     private TextView tv_home;
+    private static ProgressBar mainProgressBar;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,6 +39,7 @@ public class HomeActivityFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         this.tv_home = (TextView) view.findViewById(R.id.tv_home);
+        this.mainProgressBar = (ProgressBar) view.findViewById(R.id.main_progressBar);
 
         BoardService.getBoards(new APIServiceHandler() {
             @Override
