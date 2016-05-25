@@ -8,5 +8,5 @@ import com.google.gson.annotations.SerializedName;
 public class AppModel {
 
     @SerializedName("id")
-    public int id;
+    public String id;
 }

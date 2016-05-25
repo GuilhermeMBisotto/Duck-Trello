@@ -2,15 +2,18 @@ package com.guilhermemorescobisotto.ducktrello.Services;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 import com.guilhermemorescobisotto.ducktrello.APIService.APIService;
 import com.guilhermemorescobisotto.ducktrello.APIService.APIServiceHandler;
 import com.guilhermemorescobisotto.ducktrello.DataHolder;
 import com.guilhermemorescobisotto.ducktrello.EnumConstant.DuckConstants;
 import com.guilhermemorescobisotto.ducktrello.Helpers.Essential;
 import com.guilhermemorescobisotto.ducktrello.Helpers.SharedPreferences;
+import com.guilhermemorescobisotto.ducktrello.Models.Board;
 import com.guilhermemorescobisotto.ducktrello.Models.User;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import kotlin.Pair;
@@ -29,7 +32,11 @@ public class BoardService {
         APIService.GET(DuckConstants.API_BOARD + "/all", params, new APIServiceHandler() {
             @Override
             public void onSuccess(Object obj) {
-                callback.onSuccess(obj);
+                ArrayList<Board> boards = new ArrayList<>();
+                boards.addAll(new Gson().<Collection<? extends Board>>fromJson((String) obj, new TypeToken<List<Board>>() {
+                }.getType()));
+
+                callback.onSuccess(boards);
             }
 
             @Override
