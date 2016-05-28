@@ -10,6 +10,7 @@ import com.guilhermemorescobisotto.ducktrello.EnumConstant.DuckConstants;
 import com.guilhermemorescobisotto.ducktrello.Helpers.Essential;
 import com.guilhermemorescobisotto.ducktrello.Helpers.SharedPreferences;
 import com.guilhermemorescobisotto.ducktrello.Models.Board;
+import com.guilhermemorescobisotto.ducktrello.Models.Member;
 import com.guilhermemorescobisotto.ducktrello.Models.User;
 
 import java.util.ArrayList;
@@ -37,6 +38,29 @@ public class BoardService {
                 }.getType()));
 
                 callback.onSuccess(boards);
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMessage, Object err) {
+                callback.onError(errorCode, errorMessage, err);
+            }
+        });
+    }
+
+    public static void getMemberFromBoard(String boardId, final APIServiceHandler callback) {
+        final List<Pair<String, String>> params = new ArrayList<Pair<String, String>>() {{
+            add(new Pair<>("key", DuckConstants.APP_KEY));
+            add(new Pair<>("token", SharedPreferences.ref().getUserToken().toString().replaceAll("\"", "")));
+        }};
+
+        APIService.GET(DuckConstants.API_BOARD_MEMBERS.replace("{boardId}", boardId), params, new APIServiceHandler() {
+            @Override
+            public void onSuccess(Object obj) {
+                ArrayList<Member> members = new ArrayList<>();
+                members.addAll(new Gson().<Collection<? extends Member>>fromJson((String) obj, new TypeToken<List<Member>>() {
+                }.getType()));
+
+                callback.onSuccess(members);
             }
 
             @Override

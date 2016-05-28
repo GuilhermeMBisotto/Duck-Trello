@@ -1,0 +1,120 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".Activities.UserActivityFragment"
+                tools:showIn="@layout/activity_user"
+                android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/duck_icon"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:tint="@color/lightGreyDuck"/>
+
+        <TextView
+            android:id="@+id/tvUser_fullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:layout_marginStart="5sp"
+            android:layout_marginEnd="5sp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/blackDuck"
+            android:text="Guilherme MB"/>
+
+        <TextView
+            android:id="@+id/tvUser_userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:layout_marginStart="5sp"
+            android:layout_marginEnd="5sp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/blackDuck"
+            android:text="Guilherme"/>
+
+        <TextView
+            android:id="@+id/tvUser_userBoards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:layout_marginStart="5sp"
+            android:layout_marginEnd="5sp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/lightGreyDuck"
+            android:text="Número de boards: 4"/>
+
+        <Button
+            android:id="@+id/user_btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/logout"
+            android:background="@color/colorAccent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:textColor="@color/white"
+            android:layout_margin="20dp"/>
+
+        <TextView
+            android:id="@+id/tvUser_appName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:layout_marginStart="5sp"
+            android:layout_marginEnd="5sp"
+            android:layout_marginTop="30dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="@color/lightGreyDuck"
+            android:text="@string/app_name"/>
+
+        <TextView
+            android:id="@+id/tvUser_appDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:layout_marginStart="5sp"
+            android:layout_marginEnd="5sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="@color/lightGreyDuck"
+            android:text="@string/app_desc"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="0dp">
+
+            <ProgressBar
+                android:id="@+id/user_progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTintMode="src_atop"
+                android:indeterminateTint="@color/colorPrimary"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:visibility="gone"
+                style="?android:attr/progressBarStyleLarge"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

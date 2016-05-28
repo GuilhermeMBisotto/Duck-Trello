@@ -70,7 +70,7 @@ public class WebViewCustom extends LinearLayout {
             }
 
             @Override
-            public void onPageFinished(android.webkit.WebView view, String url) {
+            public void onPageFinished(final android.webkit.WebView view, String url) {
                 Essential.log("onPageFinished");
                 //TODO: loader finish
                 //TODO: set status to loaded
@@ -83,6 +83,8 @@ public class WebViewCustom extends LinearLayout {
                             Essential.log("key: " + value);
                             DataHolder.userToken = value;
                             SharedPreferences.ref().setUserToken(value);
+                            view.clearCache(true);
+                            view.clearHistory();
                             MainActivityFragment.startHome(context);
                         }
                     });

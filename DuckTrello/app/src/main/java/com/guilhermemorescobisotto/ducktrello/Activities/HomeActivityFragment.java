@@ -1,6 +1,7 @@
 package com.guilhermemorescobisotto.ducktrello.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -18,11 +19,16 @@ import android.widget.TextView;
 
 import com.guilhermemorescobisotto.ducktrello.APIService.APIServiceHandler;
 import com.guilhermemorescobisotto.ducktrello.APIService.WebViewCustom;
+import com.guilhermemorescobisotto.ducktrello.DataHolder;
 import com.guilhermemorescobisotto.ducktrello.EnumConstant.DuckConstants;
 import com.guilhermemorescobisotto.ducktrello.Helpers.Essential;
 import com.guilhermemorescobisotto.ducktrello.Models.Board;
+import com.guilhermemorescobisotto.ducktrello.Models.Member;
+import com.guilhermemorescobisotto.ducktrello.Models.Members;
+import com.guilhermemorescobisotto.ducktrello.Models.User;
 import com.guilhermemorescobisotto.ducktrello.R;
 import com.guilhermemorescobisotto.ducktrello.Services.BoardService;
+import com.guilhermemorescobisotto.ducktrello.Services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +44,7 @@ public class HomeActivityFragment extends Fragment {
     private SwipeRefreshLayout homeListRefresh;
     private Context context;
     private ListView lvHome;
+    private boolean clickIsAvailable = true;
 
 
     @Override
@@ -69,21 +76,45 @@ public class HomeActivityFragment extends Fragment {
             }
         });
 
-        this.loadBoards();
+        this.loadUser();
 	}
 
     private ListView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            final BoardItem boardItem = adapterHomeListView.getItem(position);
 
-            Essential.log("Board clicked: " + boardItem.getName());
+            if (clickIsAvailable) {
+                final BoardItem boardItem = adapterHomeListView.getItem(position);
+
+                Essential.log("Board clicked: " + boardItem.getName());
+
+                DataHolder.getRef().currentBoard = boardItem.getBoard();
+
+                context.startActivity(new Intent(context, CardsActivity.class));
+            }
         }
     };
 
+    private void loadUser() {
+        UserService.getUser(new APIServiceHandler() {
+            @Override
+            public void onSuccess(Object obj) {
+                Essential.log("User onSuccess");
+                DataHolder.getRef().currentUser = (User) obj;
+                loadBoards();
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMessage, Object err) {
+                Essential.log("User onError");
+            }
+        });
+    }
+
     private void loadBoards() {
         homeProgressBar.setVisibility(View.VISIBLE);
+        this.clickIsAvailable = false;
 
         BoardService.getBoards(new APIServiceHandler() {
             @Override
@@ -92,22 +123,24 @@ public class HomeActivityFragment extends Fragment {
                 List<Board> boards = new ArrayList<>();
                 boards.addAll(((ArrayList<Board>) obj));
 
+                if (DataHolder.getRef().boards == null) {
+                    DataHolder.getRef().boards = new ArrayList<>();
+                }
+                DataHolder.getRef().boards.addAll(boards);
+
                 for (Board board : boards) {
+
+                    for (Members member : board.membersList) {
+                        if (member.idMember.equalsIgnoreCase(DataHolder.getRef().currentUser.id)) {
+                            board.setUserType(member.memberType);
+                        }
+                    }
+
                     BoardItem boardItem = new BoardItem(board.name, board.closed, board);
                     homeItemList.add(boardItem);
                 }
 
-                Handler mainHandler = new Handler(context.getMainLooper());
-
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        adapterHomeListView.notifyDataSetChanged();
-                    }
-                };
-                mainHandler.post(runnable);
-
-                homeProgressBar.setVisibility(View.GONE);
+                loadMembersFromBoard(boards);
 
             }
 
@@ -117,5 +150,44 @@ public class HomeActivityFragment extends Fragment {
                 homeProgressBar.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void loadMembersFromBoard(final List<Board> boards) {
+        for (int i = 0; i < boards.size(); i++) {
+            final int finalI = i;
+            BoardService.getMemberFromBoard(boards.get(i).id, new APIServiceHandler() {
+               @Override
+               public void onSuccess(Object obj) {
+                   Essential.log("Members onSuccess");
+                   List<Member> members = new ArrayList<>();
+                   members.addAll(((ArrayList<Member>) obj));
+
+                   boards.get(finalI).setMembers(members);
+
+                   if (finalI == (boards.size()-1)) {
+
+                       Handler mainHandler = new Handler(context.getMainLooper());
+
+                       Runnable runnable = new Runnable() {
+                           @Override
+                           public void run() {
+                               adapterHomeListView.notifyDataSetChanged();
+                           }
+                       };
+                       mainHandler.post(runnable);
+
+                       homeProgressBar.setVisibility(View.GONE);
+                       clickIsAvailable = true;
+                   }
+               }
+
+               @Override
+               public void onError(int errorCode, String errorMessage, Object err) {
+                   Essential.log("Members onError");
+                   homeProgressBar.setVisibility(View.GONE);
+               }
+           });
+        }
+
     }
 }

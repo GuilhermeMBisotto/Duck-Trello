@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.guilhermemorescobisotto.ducktrello.Models.Board;
 import com.guilhermemorescobisotto.ducktrello.R;
 
 import java.util.List;
@@ -52,7 +51,9 @@ public class AdapterHomeListView extends BaseAdapter {
             BoardItem item = items.get(position);
 
             ((TextView) convertView.findViewById(R.id.homeName)).setText(item.getName());
-            ((TextView) convertView.findViewById(R.id.homeClosed)).setText("Fechado: " + (item.isClosed() == true ? "Sim" : "Não"));
+            ((TextView) convertView.findViewById(R.id.homeActiveMembers)).setText("Membros ativos: " + item.getBoard().getActiveMembers().size());
+            ((TextView) convertView.findViewById(R.id.homeUserType)).setText(item.getBoard().getUserType());
+
 
         } catch (IndexOutOfBoundsException e) {
 

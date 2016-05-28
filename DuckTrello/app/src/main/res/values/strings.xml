@@ -8,12 +8,18 @@
 
     <string name="app_name">DuckTrello</string>
     <string name="home_className">Home</string>
+    <string name="cards_className">Cards</string>
     <string name="action_settings">Settings</string>
     <string name="action_about">Sobre</string>
-
+    <string name="user_className">Usuário</string>
+    <string name="action_user">Conta</string>
 
     <string name="login_api">Logar com conta do Trello</string>
     <string name="login_google_plus">Logar com conta do Google Plus</string>
+    <string name="logout">Fazer Logout</string>
+
+    <string name="app_desc">Aplicativo desenvolvido para a cadeira de Gerencia de Projetos da Pontificia Universidade do Rio Grande do Sul - PUCRS</string>
+
 
 
     //Login

@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName;
  */
 public class AppModel {
 
+    //region Attributes
     @SerializedName("id")
     public String id;
+    //endregion
 }

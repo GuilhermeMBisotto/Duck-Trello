@@ -28,6 +28,16 @@
             android:name=".Activities.HomeActivity"
             android:label="@string/home_className"
             android:screenOrientation="sensorPortrait"/>
+
+        <activity
+            android:name=".Activities.CardsActivity"
+            android:label="@string/cards_className"
+            android:screenOrientation="sensorPortrait"/>
+
+        <activity
+            android:name=".Activities.UserActivity"
+            android:label="@string/user_className"
+            android:screenOrientation="sensorPortrait"/>
     </application>
 
 </manifest>

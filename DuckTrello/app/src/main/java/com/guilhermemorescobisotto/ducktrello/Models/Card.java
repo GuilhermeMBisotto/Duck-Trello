@@ -1,182 +1,76 @@
 package com.guilhermemorescobisotto.ducktrello.Models;
 
-import java.util.Date;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Card extends AppModel {
 
-    private String id;
-    private String name;
-    private String idList;
-    private String desc;
-    private String url;
-    private Date due;
-    private List<String> idMembers;
-    //private List<Label> labels;
-    //private Badges badges;
-    //private List<CardCheckItem> checkItemStates;
-    private boolean closed;
-    private Date dateLastActivity;
-    private String idBoard;
-    private List<String> idChecklists;
-    private List<String> idMembersVoted;
-    private String idShort;
-    private String idAttachmentCover;
-    private boolean manualCoverAttachment;
-    private int pos;
-    private String shortLink;
-    private String shortUrl;
-    private boolean subscribed;
+    //region Attributes
+    @SerializedName("closed")
+    public boolean closed;
 
-    public String getId() {
-        return id;
+    @SerializedName("name")
+    public String name;
+
+    @SerializedName("desc")
+    public String desc;
+
+    @SerializedName("idBoard")
+    public String idBoard;
+
+    @SerializedName("idList")
+    public String idList;
+
+    @SerializedName("dateLastActivity")
+    public String dateLastActivity;
+
+    @SerializedName("due")
+    public String due;
+
+    @SerializedName("idMembers")
+    public List<String> idMembers;
+
+    @SerializedName("badges")
+    public Badges badges;
+
+    @SerializedName("idChecklists")
+    public List<String> idChecklists;
+
+    private Board board;
+
+    private List<Member> memberList;
+    //endregion
+
+    public void setMembers(List<Member> members) {
+        if (this.memberList == null) {
+            this.memberList = new ArrayList<>();
+        }
+        this.memberList.addAll(members);
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
-    public String getName() {
-        return name;
+    public Board getBoard() {
+        return this.board;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getMembersNameFromCard() {
+        StringBuilder string = new StringBuilder();
 
-    public String getIdList() {
-        return idList;
-    }
+        for (int i = 0; i < this.memberList.size(); i++) {
+            if (i == 0) {
+                string.append(this.memberList.get(i).username);
+            } else if (i == (this.memberList.size()-1)) {
+                string.append(" e ").append(this.memberList.get(i).username);
+            } else {
+                string.append(", ").append(this.memberList.get(i).username);
+            }
+        }
 
-    public void setIdList(String idList) {
-        this.idList = idList;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public Date getDue() {
-        return due;
-    }
-
-    public void setDue(Date due) {
-        this.due = due;
-    }
-
-    public List<String> getIdMembers() {
-        return idMembers;
-    }
-
-    public void setIdMembers(List<String> idMembers) {
-        this.idMembers = idMembers;
-    }
-
-    public boolean isClosed() {
-        return closed;
-    }
-
-    public void setClosed(boolean closed) {
-        this.closed = closed;
-    }
-
-    public Date getDateLastActivity() {
-        return dateLastActivity;
-    }
-
-    public void setDateLastActivity(Date dateLastActivity) {
-        this.dateLastActivity = dateLastActivity;
-    }
-
-    public String getIdBoard() {
-        return idBoard;
-    }
-
-    public void setIdBoard(String idBoard) {
-        this.idBoard = idBoard;
-    }
-
-    public List<String> getIdChecklists() {
-        return idChecklists;
-    }
-
-    public void setIdChecklists(List<String> idChecklists) {
-        this.idChecklists = idChecklists;
-    }
-
-    public List<String> getIdMembersVoted() {
-        return idMembersVoted;
-    }
-
-    public void setIdMembersVoted(List<String> idMembersVoted) {
-        this.idMembersVoted = idMembersVoted;
-    }
-
-    public String getIdShort() {
-        return idShort;
-    }
-
-    public void setIdShort(String idShort) {
-        this.idShort = idShort;
-    }
-
-    public String getIdAttachmentCover() {
-        return idAttachmentCover;
-    }
-
-    public void setIdAttachmentCover(String idAttachmentCover) {
-        this.idAttachmentCover = idAttachmentCover;
-    }
-
-    public boolean isManualCoverAttachment() {
-        return manualCoverAttachment;
-    }
-
-    public void setManualCoverAttachment(boolean manualCoverAttachment) {
-        this.manualCoverAttachment = manualCoverAttachment;
-    }
-
-    public int getPos() {
-        return pos;
-    }
-
-    public void setPos(int pos) {
-        this.pos = pos;
-    }
-
-    public String getShortLink() {
-        return shortLink;
-    }
-
-    public void setShortLink(String shortLink) {
-        this.shortLink = shortLink;
-    }
-
-    public String getShortUrl() {
-        return shortUrl;
-    }
-
-    public void setShortUrl(String shortUrl) {
-        this.shortUrl = shortUrl;
-    }
-
-    public boolean isSubscribed() {
-        return subscribed;
-    }
-
-    public void setSubscribed(boolean subscribed) {
-        this.subscribed = subscribed;
+        return string.toString();
     }
 }

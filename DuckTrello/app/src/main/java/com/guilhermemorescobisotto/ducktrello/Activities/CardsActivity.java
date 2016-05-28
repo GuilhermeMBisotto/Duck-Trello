@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,14 +12,15 @@ import com.guilhermemorescobisotto.ducktrello.R;
 /**
  * Created by guilhermemorescobisotto on 5/18/16.
  */
-public class HomeActivity extends AppCompatActivity {
+public class CardsActivity extends AppCompatActivity {
 
     private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_cards);
+
         this.context = this;
     }
 
