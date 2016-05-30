@@ -1,7 +1,6 @@
 package com.guilhermemorescobisotto.ducktrello.Models;
 
 import com.google.gson.annotations.SerializedName;
-import com.guilhermemorescobisotto.ducktrello.Helpers.Essential;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class Board extends AppModel {
 
     private List<Member> members;
 
-    private List<com.guilhermemorescobisotto.ducktrello.Models.List> lists;
+    private List<TrelloList> trelloLists;
 
     private String userType;
     //endregion
@@ -38,16 +37,19 @@ public class Board extends AppModel {
     public void setMembers(List<Member> members) {
         if (this.members == null) {
             this.members = new ArrayList<>();
+        } else {
+            this.members.clear();
         }
         this.members.addAll(members);
-        Essential.log("setMembers: " + getMembersNameFromBoard());
     }
 
-    public void setList(List<com.guilhermemorescobisotto.ducktrello.Models.List> list) {
-        if (this.lists == null) {
-            this.lists = new ArrayList<>();
+    public void setList(List<TrelloList> trelloList) {
+        if (this.trelloLists == null) {
+            this.trelloLists = new ArrayList<>();
+        } else {
+            this.trelloLists.clear();
         }
-        this.lists.addAll(list);
+        this.trelloLists.addAll(trelloList);
     }
 
     public String getUserType() {
@@ -61,6 +63,12 @@ public class Board extends AppModel {
         return this.members;
     }
 
+    public List<TrelloList> getTrelloLists() {
+        if (this.trelloLists == null) {
+            this.trelloLists = new ArrayList<>();
+        }
+        return trelloLists;
+    }
 
     public List<Members> getActiveMembers () {
         ArrayList<Members> activeMembers = new ArrayList<>();

@@ -27,7 +27,7 @@ public class BoardService {
     public static void getBoards(final APIServiceHandler callback) {
         final List<Pair<String, String>> params = new ArrayList<Pair<String, String>>() {{
             add(new Pair<>("key", DuckConstants.APP_KEY));
-            add(new Pair<>("token", SharedPreferences.ref().getUserToken().toString().replaceAll("\"", "")));
+            add(new Pair<>("token", SharedPreferences.ref().getUserToken().toString()));
         }};
 
         APIService.GET(DuckConstants.API_BOARD + "/all", params, new APIServiceHandler() {
@@ -50,7 +50,7 @@ public class BoardService {
     public static void getMemberFromBoard(String boardId, final APIServiceHandler callback) {
         final List<Pair<String, String>> params = new ArrayList<Pair<String, String>>() {{
             add(new Pair<>("key", DuckConstants.APP_KEY));
-            add(new Pair<>("token", SharedPreferences.ref().getUserToken().toString().replaceAll("\"", "")));
+            add(new Pair<>("token", SharedPreferences.ref().getUserToken().toString()));
         }};
 
         APIService.GET(DuckConstants.API_BOARD_MEMBERS.replace("{boardId}", boardId), params, new APIServiceHandler() {

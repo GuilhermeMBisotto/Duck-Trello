@@ -16,10 +16,10 @@ import java.util.List;
  */
 public class AdapterHomeListView extends BaseAdapter {
 
-    private List<BoardItem> items;
+    private List<HomeItem> items;
     private Context context;
 
-    public AdapterHomeListView(Context context, List<BoardItem> items) {
+    public AdapterHomeListView(Context context, List<HomeItem> items) {
         this.items = items;
         this.context = context;
      }
@@ -30,7 +30,7 @@ public class AdapterHomeListView extends BaseAdapter {
     }
 
     @Override
-    public BoardItem getItem(int position) {
+    public HomeItem getItem(int position) {
         return items.get(position);
     }
 
@@ -48,11 +48,18 @@ public class AdapterHomeListView extends BaseAdapter {
         }
 
         try {
-            BoardItem item = items.get(position);
+            HomeItem item = items.get(position);
 
-            ((TextView) convertView.findViewById(R.id.homeName)).setText(item.getName());
-            ((TextView) convertView.findViewById(R.id.homeActiveMembers)).setText("Membros ativos: " + item.getBoard().getActiveMembers().size());
-            ((TextView) convertView.findViewById(R.id.homeUserType)).setText(item.getBoard().getUserType());
+            int color = context.getResources().getColor(R.color.lightGreyDuck);
+
+            if (!item.isClosed()) {
+                color = context.getResources().getColor(R.color.greenDuck);
+            }
+
+            (convertView.findViewById(R.id.ll_isClosed)).setBackgroundColor(color);
+            ((TextView) convertView.findViewById(R.id.tv_homeName)).setText(item.getName());
+            ((TextView) convertView.findViewById(R.id.tv_homeActiveMembers)).setText("Membros ativos: " + item.getBoard().getActiveMembers().size());
+            ((TextView) convertView.findViewById(R.id.tv_homeUserType)).setText(item.getBoard().getUserType());
 
 
         } catch (IndexOutOfBoundsException e) {

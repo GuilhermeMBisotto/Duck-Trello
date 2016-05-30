@@ -1,24 +1,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".Activities.UserActivityFragment"
-                tools:showIn="@layout/activity_user"
-                android:background="@color/white">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    tools:context=".Activities.UserActivityFragment"
+    tools:showIn="@layout/activity_user"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/imgUser_userPhoto"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_gravity="center_horizontal"
-            android:src="@mipmap/duck_icon"
-            android:layout_marginTop="30dp"
+            fresco:placeholderImage="@mipmap/duck_icon"
+            fresco:roundedCornerRadius="50dp"
+            fresco:roundingBorderWidth="1dp"
+            fresco:roundingBorderColor="@color/lightGreyDuck"
             android:layout_marginBottom="10dp"
-            android:tint="@color/lightGreyDuck"/>
+            android:layout_marginTop="30dp"/>
 
         <TextView
             android:id="@+id/tvUser_fullName"
@@ -95,6 +99,19 @@
             android:gravity="center_vertical|center_horizontal"
             android:textColor="@color/lightGreyDuck"
             android:text="@string/app_desc"/>
+
+        <TextView
+            android:id="@+id/tvUser_appVersion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:layout_marginStart="5sp"
+            android:layout_marginEnd="5sp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="@color/lightGreyDuck"
+            android:text="@string/app_name"/>
 
         <LinearLayout
             android:layout_width="match_parent"

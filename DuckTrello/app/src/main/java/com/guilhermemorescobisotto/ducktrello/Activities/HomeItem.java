@@ -5,13 +5,13 @@ import com.guilhermemorescobisotto.ducktrello.Models.Board;
 /**
  * Created by guilhermemorescobisotto on 5/24/16.
  */
-public class BoardItem {
+public class HomeItem {
 
     private String name;
     private boolean closed;
     private Board board;
 
-    public BoardItem(String name, boolean closed, Board board) {
+    public HomeItem(String name, boolean closed, Board board) {
         this.name = name;
         this.closed = closed;
         this.board = board;

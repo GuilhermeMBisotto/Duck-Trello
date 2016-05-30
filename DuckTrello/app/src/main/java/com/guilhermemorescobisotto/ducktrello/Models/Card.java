@@ -46,6 +46,8 @@ public class Card extends AppModel {
     public void setMembers(List<Member> members) {
         if (this.memberList == null) {
             this.memberList = new ArrayList<>();
+        } else {
+            this.memberList.clear();
         }
         this.memberList.addAll(members);
     }

@@ -7,6 +7,12 @@
               android:background="@color/white">
 
     <LinearLayout
+        android:id="@+id/ll_isClosed"
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:background="@color/lightGreyDuck" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -17,7 +23,7 @@
         android:layout_weight="1">
 
         <TextView
-            android:id="@+id/homeName"
+            android:id="@+id/tv_homeName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5sp"
@@ -28,7 +34,7 @@
             android:text="Name do Board"/>
 
         <TextView
-            android:id="@+id/homeActiveMembers"
+            android:id="@+id/tv_homeActiveMembers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5sp"
@@ -37,7 +43,7 @@
             android:text="Membros ativos: 10"/>
 
         <TextView
-            android:id="@+id/homeUserType"
+            android:id="@+id/tv_homeUserType"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5sp"

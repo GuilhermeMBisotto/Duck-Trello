@@ -81,8 +81,7 @@ public class WebViewCustom extends LinearLayout {
                         @Override
                         public void onReceiveValue(String value) {
                             Essential.log("key: " + value);
-                            DataHolder.userToken = value;
-                            SharedPreferences.ref().setUserToken(value);
+                            SharedPreferences.ref().setUserToken(value.replaceAll("\"", ""));
                             view.clearCache(true);
                             view.clearHistory();
                             MainActivityFragment.startHome(context);

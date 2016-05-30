@@ -25,7 +25,7 @@ public class CardService {
     public static void getCard(String boardId, final APIServiceHandler callback) {
         final List<Pair<String, String>> params = new ArrayList<Pair<String, String>>() {{
             add(new Pair<>("key", DuckConstants.APP_KEY));
-            add(new Pair<>("token", SharedPreferences.ref().getUserToken().toString().replaceAll("\"", "")));
+            add(new Pair<>("token", SharedPreferences.ref().getUserToken().toString()));
         }};
 
         APIService.GET(DuckConstants.API_BOARD_CARDS.replace("{boardId}", boardId), params, new APIServiceHandler() {
@@ -45,19 +45,40 @@ public class CardService {
         });
     }
 
+    public static void getCardsFromList(String listId, final APIServiceHandler callback) {
+        final List<Pair<String, String>> params = new ArrayList<Pair<String, String>>() {{
+            add(new Pair<>("key", DuckConstants.APP_KEY));
+            add(new Pair<>("token", SharedPreferences.ref().getUserToken().toString()));
+        }};
+
+        APIService.GET(DuckConstants.API_LIST_CARDS.replace("{listId}", listId), params, new APIServiceHandler() {
+            @Override
+            public void onSuccess(Object obj) {
+                ArrayList<Card> cards = new ArrayList<>();
+                cards.addAll(new Gson().<Collection<? extends Card>>fromJson((String) obj, new TypeToken<List<Card>>() {
+                }.getType()));
+
+                callback.onSuccess(cards);
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMessage, Object err) {
+                callback.onError(errorCode, errorMessage, err);
+            }
+        });
+
+    }
+
     public static void getMemberFromCard(Card card) {
         ArrayList<Member> members = new ArrayList<>();
 
-        if (card.getBoard() != null) {
-            for (Member memberBoard : card.getBoard().getMembers()) {
-                for (String memberCard : card.idMembers) {
-                    if (memberBoard.id.equalsIgnoreCase(memberCard)) {
-                        members.add(memberBoard);
-                    }
+        for (Member memberBoard : DataHolder.getRef().currentBoard.getMembers()) {
+            for (String memberCard : card.idMembers) {
+                if (memberBoard.id.equalsIgnoreCase(memberCard)) {
+                    members.add(memberBoard);
                 }
             }
         }
-
         card.setMembers(members);
     }
 }

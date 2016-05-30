@@ -3,6 +3,8 @@ package com.guilhermemorescobisotto.ducktrello.Helpers;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -57,5 +59,15 @@ public class Essential {
 
     public static String removeCharFromEnd(String text, int quantity) {
         return text.substring(0, text.length() - quantity);
+    }
+
+    public static String getAppVersionName(Context ctx) {
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0);
+            return packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "0.0";
+        }
     }
 }

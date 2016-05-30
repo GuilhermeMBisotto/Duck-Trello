@@ -12,14 +12,14 @@ import com.guilhermemorescobisotto.ducktrello.R;
 /**
  * Created by guilhermemorescobisotto on 5/18/16.
  */
-public class CardsActivity extends AppCompatActivity {
+public class BoardDetailActivity extends AppCompatActivity {
 
     private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cards);
+        setContentView(R.layout.activity_board_detail);
 
         this.context = this;
     }

@@ -15,11 +15,9 @@ public class DataHolder {
     public Board currentBoard;
 
     public List<Board> boards;
-    public List<Card> cards;
 
     private static DataHolder holder = new DataHolder();
     public static DataHolder getRef() { return holder; }
-    public static String userToken;
 
     private DataHolder(){}
 

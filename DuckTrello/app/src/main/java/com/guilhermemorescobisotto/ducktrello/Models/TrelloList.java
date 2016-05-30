@@ -3,11 +3,12 @@ package com.guilhermemorescobisotto.ducktrello.Models;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by guilhermemorescobisotto on 4/29/16.
  */
-public class List extends AppModel {
+public class TrelloList extends AppModel {
 
     //region Attributes
     @SerializedName("name")
@@ -19,19 +20,25 @@ public class List extends AppModel {
     @SerializedName("idBoard")
     public String idBoard;
 
-    @SerializedName("pos")
-    public int pos;
-
     @SerializedName("subscribed")
     public boolean subscribed;
 
-    private java.util.List<Card> cards;
+    private List<Card> cards;
     //endregion
 
-    public void setCards(java.util.List<Card> cards) {
+    public void setCards(List<Card> cards) {
+        if (this.cards == null) {
+            this.cards = new ArrayList<>();
+        } else {
+            this.cards.clear();
+        }
+        this.cards.addAll(cards);
+    }
+
+    public List<Card> getCards() {
         if (this.cards == null) {
             this.cards = new ArrayList<>();
         }
-        this.cards.addAll(cards);
+        return cards;
     }
 }

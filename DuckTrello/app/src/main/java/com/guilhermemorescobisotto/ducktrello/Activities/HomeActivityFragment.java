@@ -9,29 +9,18 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.guilhermemorescobisotto.ducktrello.APIService.APIServiceHandler;
-import com.guilhermemorescobisotto.ducktrello.APIService.WebViewCustom;
 import com.guilhermemorescobisotto.ducktrello.DataHolder;
-import com.guilhermemorescobisotto.ducktrello.EnumConstant.DuckConstants;
 import com.guilhermemorescobisotto.ducktrello.Helpers.Essential;
+import com.guilhermemorescobisotto.ducktrello.Helpers.OnTaskCompleted;
 import com.guilhermemorescobisotto.ducktrello.Models.Board;
-import com.guilhermemorescobisotto.ducktrello.Models.Member;
-import com.guilhermemorescobisotto.ducktrello.Models.Members;
-import com.guilhermemorescobisotto.ducktrello.Models.User;
 import com.guilhermemorescobisotto.ducktrello.R;
-import com.guilhermemorescobisotto.ducktrello.Services.BoardService;
-import com.guilhermemorescobisotto.ducktrello.Services.UserService;
+import com.guilhermemorescobisotto.ducktrello.Services.HomeService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -40,7 +29,7 @@ public class HomeActivityFragment extends Fragment {
 
     private static ProgressBar homeProgressBar;
     private AdapterHomeListView adapterHomeListView;
-    private ArrayList<BoardItem> homeItemList;
+    private ArrayList<HomeItem> homeItemList;
     private SwipeRefreshLayout homeListRefresh;
     private Context context;
     private ListView lvHome;
@@ -71,12 +60,12 @@ public class HomeActivityFragment extends Fragment {
             public void onRefresh() {
                 Essential.log("sb-- onRefresh");
                 homeItemList.clear();
-                loadBoards();
+                initHomeService();
                 homeListRefresh.setRefreshing(false);
             }
         });
 
-        this.loadUser();
+        this.initHomeService();
 	}
 
     private ListView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
@@ -85,109 +74,50 @@ public class HomeActivityFragment extends Fragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             if (clickIsAvailable) {
-                final BoardItem boardItem = adapterHomeListView.getItem(position);
+                final HomeItem homeItem = adapterHomeListView.getItem(position);
 
-                Essential.log("Board clicked: " + boardItem.getName());
+                Essential.log("Board clicked: " + homeItem.getName());
 
-                DataHolder.getRef().currentBoard = boardItem.getBoard();
+                DataHolder.getRef().currentBoard = homeItem.getBoard();
 
-                context.startActivity(new Intent(context, CardsActivity.class));
+                context.startActivity(new Intent(context, BoardDetailActivity.class));
             }
         }
     };
 
-    private void loadUser() {
-        UserService.getUser(new APIServiceHandler() {
-            @Override
-            public void onSuccess(Object obj) {
-                Essential.log("User onSuccess");
-                DataHolder.getRef().currentUser = (User) obj;
-                loadBoards();
-            }
+    private void initHomeService() {
 
-            @Override
-            public void onError(int errorCode, String errorMessage, Object err) {
-                Essential.log("User onError");
-            }
-        });
-    }
-
-    private void loadBoards() {
-        homeProgressBar.setVisibility(View.VISIBLE);
+        this.homeProgressBar.setVisibility(View.VISIBLE);
         this.clickIsAvailable = false;
 
-        BoardService.getBoards(new APIServiceHandler() {
+        HomeService.initService(new OnTaskCompleted() {
             @Override
-            public void onSuccess(Object obj) {
-                Essential.log("Boards onSuccess");
-                List<Board> boards = new ArrayList<>();
-                boards.addAll(((ArrayList<Board>) obj));
+            public void onTaskCompletedSuccess() {
 
-                if (DataHolder.getRef().boards == null) {
-                    DataHolder.getRef().boards = new ArrayList<>();
-                }
-                DataHolder.getRef().boards.addAll(boards);
+                ArrayList<Board> boards = new ArrayList<>(DataHolder.getRef().boards);
 
                 for (Board board : boards) {
-
-                    for (Members member : board.membersList) {
-                        if (member.idMember.equalsIgnoreCase(DataHolder.getRef().currentUser.id)) {
-                            board.setUserType(member.memberType);
-                        }
-                    }
-
-                    BoardItem boardItem = new BoardItem(board.name, board.closed, board);
-                    homeItemList.add(boardItem);
+                    HomeItem homeItem = new HomeItem(board.name, board.closed, board);
+                    homeItemList.add(homeItem);
                 }
 
-                loadMembersFromBoard(boards);
-
+                Handler mainHandler = new Handler(context.getMainLooper());
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        adapterHomeListView.notifyDataSetChanged();
+                    }
+                };
+                homeProgressBar.setVisibility(View.GONE);
+                clickIsAvailable = true;
+                mainHandler.post(runnable);
             }
 
             @Override
-            public void onError(int errorCode, String errorMessage, Object err) {
-                Essential.log("Boards onError");
+            public void onTaskCompletedFailure(String error) {
+                Essential.log("initHomeService Failure: " + error);
                 homeProgressBar.setVisibility(View.GONE);
             }
         });
-    }
-
-    private void loadMembersFromBoard(final List<Board> boards) {
-        for (int i = 0; i < boards.size(); i++) {
-            final int finalI = i;
-            BoardService.getMemberFromBoard(boards.get(i).id, new APIServiceHandler() {
-               @Override
-               public void onSuccess(Object obj) {
-                   Essential.log("Members onSuccess");
-                   List<Member> members = new ArrayList<>();
-                   members.addAll(((ArrayList<Member>) obj));
-
-                   boards.get(finalI).setMembers(members);
-
-                   if (finalI == (boards.size()-1)) {
-
-                       Handler mainHandler = new Handler(context.getMainLooper());
-
-                       Runnable runnable = new Runnable() {
-                           @Override
-                           public void run() {
-                               adapterHomeListView.notifyDataSetChanged();
-                           }
-                       };
-                       mainHandler.post(runnable);
-
-                       homeProgressBar.setVisibility(View.GONE);
-                       clickIsAvailable = true;
-                   }
-               }
-
-               @Override
-               public void onError(int errorCode, String errorMessage, Object err) {
-                   Essential.log("Members onError");
-                   homeProgressBar.setVisibility(View.GONE);
-               }
-           });
-        }
-
     }
 }
