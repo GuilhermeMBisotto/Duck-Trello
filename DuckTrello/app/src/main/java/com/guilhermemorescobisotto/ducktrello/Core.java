@@ -4,8 +4,11 @@ import android.app.Application;
 import android.content.Intent;
 import android.provider.Settings;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.guilhermemorescobisotto.ducktrello.APIService.APIService;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by guilhermemorescobisotto on 4/28/16.
@@ -18,12 +21,15 @@ public class Core extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         ref = this;
         selfID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         APIService.selfConfiguration();
         Fresco.initialize(this);
+
     }
+
     public static Core ref(){ return ref; }
     public static String selfID(){ return selfID; }
 

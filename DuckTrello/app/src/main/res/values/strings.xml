@@ -12,6 +12,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_about">Sobre</string>
     <string name="user_className">Usuário</string>
+    <string name="graph_className">Gráficos</string>
     <string name="action_user">Conta</string>
 
     <string name="login_api">Logar com conta do Trello</string>

@@ -75,4 +75,11 @@ public class Card extends AppModel {
 
         return string.toString();
     }
+
+    public List<Member> getMemberList() {
+        if (this.memberList == null) {
+            this.memberList = new ArrayList<>();
+        }
+        return memberList;
+    }
 }

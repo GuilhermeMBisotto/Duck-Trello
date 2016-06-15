@@ -1,6 +1,7 @@
 package com.guilhermemorescobisotto.ducktrello.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -36,6 +38,8 @@ public class BoardDetailActivityFragment extends Fragment {
     private SwipeRefreshLayout boardDetailListRefresh;
     private Context context;
     private ListView lvBoardDetail;
+    private Button btnBuildGraph;
+    private boolean canBuildGraph = false;
 
 
     @Override
@@ -49,6 +53,7 @@ public class BoardDetailActivityFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         this.context = getContext();
         this.boardDetailProgressBar = (ProgressBar) view.findViewById(R.id.cards_progressBar);
+        this.canBuildGraph = false;
 
         this.boardDetailItemsList = new ArrayList<>();
         this.adapterBoardDetailListView = new AdapterBoardDetailListView(context, this.boardDetailItemsList);
@@ -61,9 +66,19 @@ public class BoardDetailActivityFragment extends Fragment {
             @Override
             public void onRefresh() {
                 Essential.log("sb-- onRefresh");
+                canBuildGraph = false;
                 boardDetailItemsList.clear();
                 initProjectDetailService();
                 boardDetailListRefresh.setRefreshing(false);
+            }
+        });
+
+        this.btnBuildGraph = (Button) view.findViewById(R.id.btnBuildGraph);
+        this.btnBuildGraph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!canBuildGraph) { return; }
+                getContext().startActivity(new Intent(getContext(), GraphActivity.class));
             }
         });
 
@@ -100,6 +115,7 @@ public class BoardDetailActivityFragment extends Fragment {
 
                         adapterBoardDetailListView.notifyDataSetChanged();
                         boardDetailProgressBar.setVisibility(View.GONE);
+                        canBuildGraph = true;
                     }
                 };
                 mainHandler.post(runnable);
@@ -112,6 +128,8 @@ public class BoardDetailActivityFragment extends Fragment {
             }
         });
     }
+
+
 
 //    private void loadCards() {
 //        this.boardDetailProgressBar.setVisibility(View.VISIBLE);

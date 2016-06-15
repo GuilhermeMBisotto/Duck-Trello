@@ -47,6 +47,14 @@
             android:name=".Activities.UserActivity"
             android:label="@string/user_className"
             android:screenOrientation="sensorPortrait"/>
+
+        <activity
+            android:name=".Activities.GraphActivity"
+            android:label="@string/graph_className"
+            android:screenOrientation="sensorPortrait"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="60b97cd319c1b93857062aa7f80602cf4151d3d2" />
     </application>
 
 </manifest>
